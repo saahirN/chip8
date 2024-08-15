@@ -11,14 +11,27 @@ Screen::Screen() {
     screen = SDL_CreateWindow("Chip8", 
         SDL_WINDOWPOS_UNDEFINED, 
         SDL_WINDOWPOS_UNDEFINED,
-        WIDTH,
-        HEIGHT,
+        WIDTH * 10,
+        HEIGHT * 10,
         SDL_WINDOW_SHOWN);
-
     if(screen == nullptr) {
         std::cerr << "Failed to create screen\n"; 
         return; 
     }
+
+    renderer = SDL_CreateRenderer(screen, -1, SDL_RENDERER_ACCELERATED); 
+    if(renderer == nullptr) {
+        std::cerr << "Failed to create renderer\n"; 
+        return; 
+    }
+
+    texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING, WIDTH, HEIGHT);
+    if(renderer == nullptr) {
+        std::cerr << "Failed to create texture\n"; 
+        return; 
+    }
+
+
 }
 
 Screen::~Screen() {
